@@ -5,6 +5,11 @@ import React from 'react';
 
 function App() {
   const [post, setPost] = React.useState(null);
+  const [state, setState] = React.useState(""); 
+
+  function handleChange(event) {
+    setState(event.target.value);
+  };
 
   React.useEffect(() => {
     axios.get('https://morning-coast-76985.herokuapp.com/todo/?format=json').then((response) => {
@@ -14,13 +19,21 @@ function App() {
 
 
   function createPost() {
-    axios
-      .post('https://morning-coast-76985.herokuapp.com/todo/?format=json', {
-        content: "Hello World!"        
-      })
-      .then((response) => {
-        setPost(response.data);
-      });
+    if(state !== "" )
+    {
+      axios
+        .post('https://morning-coast-76985.herokuapp.com/todo/?format=json', {
+          content: state        
+        })
+        .then((response) => {
+          setPost(response.data);
+          setState("");
+        });
+    }
+    else
+    {
+      alert("Can't add empty values")
+    }
   }
 
   function deletePost(del_content) {
@@ -28,8 +41,7 @@ function App() {
       .delete('https://morning-coast-76985.herokuapp.com/todo/?format=json',{data: {
         id: del_content     
       }})
-      .then((response) => {
-        console.log(del_content);
+      .then((response) => { 
         if (Array.isArray(del_content)) alert("All To-Do item deleted!");
         else alert("To-Do item deleted!");
         setPost(response.data);
@@ -41,13 +53,14 @@ function App() {
   
 
   return (
-    <div>
+    <div className="background">
 
+      <input type="text" value={state} onChange={handleChange} placeholder="Type your To-Do item"/>
       <button onClick={createPost}>Add To-Do Item</button>
-      <button onClick={() => deletePost(post)}>delete</button>
+      <button onClick={() => deletePost(post)}>Delete All</button>
       {post.map((item,index) => 
           <li key={index}> 
-            {item.content } <button onClick={() => deletePost(item.id)}>delete</button>
+            {item.content } <button onClick ={() => deletePost(item.id)}>Delete</button>
            </li>
       )}
             
