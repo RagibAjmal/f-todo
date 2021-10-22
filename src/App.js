@@ -7,7 +7,7 @@ function App() {
   const [post, setPost] = React.useState(null);
 
   React.useEffect(() => {
-    axios.get('http://127.0.0.1:8000/todo/?format=json').then((response) => {
+    axios.get('https://morning-coast-76985.herokuapp.com/todo/?format=json').then((response) => {
       setPost(response.data);
     });
   }, []);
@@ -15,7 +15,7 @@ function App() {
 
   function createPost() {
     axios
-      .post('http://127.0.0.1:8000/todo/?format=json', {
+      .post('https://morning-coast-76985.herokuapp.com/todo/?format=json', {
         content: "Hello World!"        
       })
       .then((response) => {
@@ -25,7 +25,7 @@ function App() {
 
   function deletePost(del_content) {
     axios
-      .delete('http://127.0.0.1:8000/todo/?format=json',{data: {
+      .delete('https://morning-coast-76985.herokuapp.com/todo/?format=json',{data: {
         id: del_content     
       }})
       .then((response) => {
@@ -43,7 +43,7 @@ function App() {
   return (
     <div>
 
-      <button onClick={createPost}>Add To-Do</button>
+      <button onClick={createPost}>Add To-Do Item</button>
       <button onClick={() => deletePost(post)}>delete</button>
       {post.map((item,index) => 
           <li key={index}> 
