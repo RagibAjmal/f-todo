@@ -4,11 +4,14 @@ import React  from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import 'primereact/resources/themes/saga-blue/theme.css';
+import { AnimateSharedLayout,motion } from "framer-motion"
 
 function App() {
 
   const [post, setPost] = React.useState(null);
   const [state, setState] = React.useState(""); 
+  const [background, setBackground] = React.useState("linear-gradient(90deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%)"); 
+  
 
   React.useEffect(() => {
     axios.get('https://morning-coast-76985.herokuapp.com/todo/?format=json').then((response) => {
@@ -38,22 +41,51 @@ function App() {
     }
   }
 
-  function deletePost(del_content) {
+  function deletePost(item) {
     axios
       .delete('https://morning-coast-76985.herokuapp.com/todo/?format=json',{data: {
-        id: del_content     
+        id: item     
       }})
       .then((response) => { 
-        if (Array.isArray(del_content)) alert("All To-Do item deleted!");
+        if (Array.isArray(item)) alert("All To-Do item deleted!");
         else alert("To-Do item deleted!");
         setPost(response.data);
       });
+  }
+
+  function deletePostdrag(event, info, item) {
+    if (info.point.x - item.start > 200) {
+      axios
+        .delete('https://morning-coast-76985.herokuapp.com/todo/?format=json', {
+          data: {
+            id: item.id
+          }
+        })
+        .then((response) => {
+          if (Array.isArray(item)) alert("All To-Do item deleted!");
+          else alert("To-Do item deleted!");
+          setPost(response.data);
+          setBackground("linear-gradient(90deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%)");
+        });
+    };
+    
+  }
+
+  function changecolordrag(event , info , item){
+    if(info.point.x - item.start > 200){ setBackground("linear-gradient(180deg, #ff008c 0%, rgb(211, 9, 225) 100%)") }  
+    else {setBackground("linear-gradient(90deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%)")};
+  }
+
+  function startinfodrag(event , info , item){
+    if (! ('start' in item)) { 
+      item['start'] = info.point.x;
+    }    
   }
   
   if (!post) return null;  
 
   return (
-    <div className="background">
+    <div className="background" style={{ background:background }}>
 
       <div className="card">
         <div className="p-grid p-fluid">
@@ -65,12 +97,18 @@ function App() {
             </div>
           </div>
         </div>
-      </div>
-            
+      </div> 
+
       {post.map((item,index) => 
-        <li key={index}> 
-         {item.content } <button onClick ={() => deletePost(item.id)}>Delete</button>
-        </li>
+      
+        <motion.ul drag="x" layout key={index} dragElastic={0.2} 
+        dragConstraints={{ left: 0, right: 100 }} dragMomentum={false} 
+        onDragStart={(event , info) => startinfodrag( event , info , item )}
+        onDragEnd={(event , info) => deletePostdrag( event , info, item )}
+        onDrag={(event , info) => changecolordrag( event , info , item )}
+        > 
+         {item.content }
+        </motion.ul>
       )}
             
     </div>

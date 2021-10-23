@@ -8,6 +8,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.23.0",
+    "framer-motion": "^4.1.17",
     "gh-pages": "^3.2.3",
     "primereact": "^6.6.0",
     "react": "^17.0.2",
