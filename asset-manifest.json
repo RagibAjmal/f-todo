@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/f-todo/static/css/main.bbf16f3e.chunk.css",
-    "main.js": "/f-todo/static/js/main.a5ba921c.chunk.js",
-    "main.js.map": "/f-todo/static/js/main.a5ba921c.chunk.js.map",
+    "main.js": "/f-todo/static/js/main.c826b239.chunk.js",
+    "main.js.map": "/f-todo/static/js/main.c826b239.chunk.js.map",
     "runtime-main.js": "/f-todo/static/js/runtime-main.cf0d97d0.js",
     "runtime-main.js.map": "/f-todo/static/js/runtime-main.cf0d97d0.js.map",
     "static/js/2.058af2c7.chunk.js": "/f-todo/static/js/2.058af2c7.chunk.js",
@@ -11,13 +11,12 @@
     "static/js/3.bdae4af1.chunk.js.map": "/f-todo/static/js/3.bdae4af1.chunk.js.map",
     "index.html": "/f-todo/index.html",
     "static/css/main.bbf16f3e.chunk.css.map": "/f-todo/static/css/main.bbf16f3e.chunk.css.map",
-    "static/js/2.058af2c7.chunk.js.LICENSE.txt": "/f-todo/static/js/2.058af2c7.chunk.js.LICENSE.txt",
-    "static/media/logo.6ce24c58.svg": "/f-todo/static/media/logo.6ce24c58.svg"
+    "static/js/2.058af2c7.chunk.js.LICENSE.txt": "/f-todo/static/js/2.058af2c7.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.cf0d97d0.js",
     "static/js/2.058af2c7.chunk.js",
     "static/css/main.bbf16f3e.chunk.css",
-    "static/js/main.a5ba921c.chunk.js"
+    "static/js/main.c826b239.chunk.js"
   ]
 }
