@@ -4,7 +4,8 @@ import React  from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import 'primereact/resources/themes/saga-blue/theme.css';
-import { AnimateSharedLayout,motion } from "framer-motion"
+import { motion } from "framer-motion";
+import 'primeicons/primeicons.css'
 
 function App() {
 
@@ -112,15 +113,19 @@ function App() {
             </li>
           )}
         </div>
-        <div id="monetization"className="background hidden" style={{ background: background }}>
+        <div id="monetization"className="background  hidden" style={{ background: background }}>
 
           <div className="card">
             <div className="p-grid p-fluid">
               <div className="p-col-12 p-md-4">
-                <div className="p-inputgroup">
+                <div className="p-inputgroup p-p-3">
                   <InputText placeholder="Keyword" value={state} onChange={handleChange} placeholder="Type your To-Do item" />
                   <Button label="Add Item" onClick={createPost} />
                   <Button label="Delete All" onClick={() => deletePost(post)} />
+                </div>
+                <p></p>
+                <div className="p-p-3" >
+                  Swipe Right <i className="pi pi-arrow-right" ></i> to Delete
                 </div>
               </div>
             </div>
