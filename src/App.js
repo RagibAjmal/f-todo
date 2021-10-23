@@ -11,6 +11,7 @@ function App() {
   const [post, setPost] = React.useState(null);
   const [state, setState] = React.useState(""); 
   const [background, setBackground] = React.useState("linear-gradient(90deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%)"); 
+  const meta={}
   
 
   React.useEffect(() => {
@@ -84,34 +85,63 @@ function App() {
   
   if (!post) return null;  
 
-  return (
-    <div className="background" style={{ background:background }}>
+  if (document.monetization){
+    document.monetization.addEventListener('monetizationstart',()=> {
+        document.getElementById('non-monetization').classList.add('hidden');
+    });
+    document.monetization.addEventListener('monetizationstart',()=> {
+      document.getElementById('monetization').classList.remove('hidden');
+  });
+}
 
-      <div className="card">
-        <div className="p-grid p-fluid">
-          <div className="p-col-12 p-md-4">
-            <div className="p-inputgroup">
-              <InputText placeholder="Keyword" value={state} onChange={handleChange} placeholder="Type your To-Do item"/>
-              <Button label="Add Item" onClick={createPost}/>
-              <Button label="Delete All" onClick={() => deletePost(post)}/>
+  return (
+    <html>
+      <head>
+        <meta name="monetization" content="$ilp.uphold.com/LJmbPn7WD4JB"></meta>
+      </head>
+      <body>
+        <div id="non-monetization" className="background-plain">
+          <div>
+            <input type="text" value={state} onChange={handleChange} placeholder="Type your To-Do item"/>
+            <button onClick={createPost}>Add Item</button>
+            <button onClick={() => deletePost(post)}>Delete All</button>
+          </div>
+          {post.map((item, index) =>
+            <li key={index}>
+              {item.content} <button onClick={() => deletePost(item.id)}>Delete</button>
+            </li>
+          )}
+        </div>
+        <div id="monetization"className="background hidden" style={{ background: background }}>
+
+          <div className="card">
+            <div className="p-grid p-fluid">
+              <div className="p-col-12 p-md-4">
+                <div className="p-inputgroup">
+                  <InputText placeholder="Keyword" value={state} onChange={handleChange} placeholder="Type your To-Do item" />
+                  <Button label="Add Item" onClick={createPost} />
+                  <Button label="Delete All" onClick={() => deletePost(post)} />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div> 
 
-      {post.map((item,index) => 
-      
-        <motion.ul drag="x" layout key={index} dragElastic={0.2} 
-        dragConstraints={{ left: 0, right: 100 }} dragMomentum={false} 
-        onDragStart={(event , info) => startinfodrag( event , info , item )}
-        onDragEnd={(event , info) => deletePostdrag( event , info, item )}
-        onDrag={(event , info) => changecolordrag( event , info , item )}
-        > 
-         {item.content }
-        </motion.ul>
-      )}
-            
-    </div>
+          {post.map((item, index) =>
+
+            <motion.ul drag="x" layout key={index} dragElastic={0.2}
+              dragConstraints={{ left: 0, right: 100 }} dragMomentum={false}
+              onDragStart={(event, info) => startinfodrag(event, info, item)}
+              onDragEnd={(event, info) => deletePostdrag(event, info, item)}
+              onDrag={(event, info) => changecolordrag(event, info, item)}
+            >
+              {item.content}
+            </motion.ul>
+          )}
+
+        </div>
+      </body>
+    </html>
+
   );
 }
 
