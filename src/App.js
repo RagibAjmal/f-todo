@@ -1,14 +1,14 @@
 import './App.css';
 import axios from 'axios';
-import React from 'react';
+import React  from 'react';
+import { InputText } from 'primereact/inputtext';
+import { Button } from 'primereact/button';
+import 'primereact/resources/themes/saga-blue/theme.css';
 
 function App() {
+
   const [post, setPost] = React.useState(null);
   const [state, setState] = React.useState(""); 
-
-  function handleChange(event) {
-    setState(event.target.value);
-  };
 
   React.useEffect(() => {
     axios.get('https://morning-coast-76985.herokuapp.com/todo/?format=json').then((response) => {
@@ -16,6 +16,9 @@ function App() {
     });
   }, []);
 
+  function handleChange(event) {
+    setState(event.target.value);
+  };
 
   function createPost() {
     if(state !== "" )
@@ -47,20 +50,27 @@ function App() {
       });
   }
   
-  if (!post) return null;
-
-  
+  if (!post) return null;  
 
   return (
     <div className="background">
 
-      <input type="text" value={state} onChange={handleChange} placeholder="Type your To-Do item"/>
-      <button onClick={createPost}>Add To-Do Item</button>
-      <button onClick={() => deletePost(post)}>Delete All</button>
+      <div className="card">
+        <div className="p-grid p-fluid">
+          <div className="p-col-12 p-md-4">
+            <div className="p-inputgroup">
+              <InputText placeholder="Keyword" value={state} onChange={handleChange} placeholder="Type your To-Do item"/>
+              <Button label="Add Item" onClick={createPost}/>
+              <Button label="Delete All" onClick={() => deletePost(post)}/>
+            </div>
+          </div>
+        </div>
+      </div>
+            
       {post.map((item,index) => 
-          <li key={index}> 
-            {item.content } <button onClick ={() => deletePost(item.id)}>Delete</button>
-           </li>
+        <li key={index}> 
+         {item.content } <button onClick ={() => deletePost(item.id)}>Delete</button>
+        </li>
       )}
             
     </div>
